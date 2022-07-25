@@ -1,29 +1,36 @@
-import React, { useContext } from 'react'
-import {Context} from '../index'
+import React, { useContext } from 'react';
+import { Context } from '../index';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { SHOP_ROUTE } from '../utils/consts';
+import { Button } from 'react-bootstrap';
 
 const NavBar = () => {
-	const {user} = useContext(Context)
+	const { user } = useContext(Context);
 	return (
 		<>
-			<Navbar bg="dark" variant="dark">
-        <Container>
-				<NavLink style={{color: "green"}} to={SHOP_ROUTE}>Guitar Store</NavLink>
-          {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
-          <Nav className="ml-auto" style={{color: "white"}}>
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
+			<Navbar bg='dark' variant='dark'>
+				<Container>
+					<NavLink style={{ color: 'green' }} to={SHOP_ROUTE}>
+						Guitar Store
+					</NavLink>
+					{user.isAuth ? 
+          <Nav className='ml-auto' style={{ color: 'white' }}>
+						<Button variant={'outline-light'}>Админ панель</Button>
+						<Button variant={'outline-light'} className="ms-2">Выйти</Button>
+					</Nav>
+          :
+          <Nav className='ml-auto' style={{ color: 'white' }}>
+						<Button variant={'outline-light'}>Авторизация</Button>
+					</Nav>
+          }
+				</Container>
+			</Navbar>
 		</>
-	)
-}
+	);
+};
 
-export default NavBar
+export default NavBar;
