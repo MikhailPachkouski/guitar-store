@@ -9,7 +9,7 @@ const InstrumentItem = ({instrument}) => {
 	return (
 		<Col md={3} onClick={() => navigate(INSTRUMENT_ROUTE + '/' + instrument.id)}>
 			<Card className='mt-2' style={{ width: 150, cursor: 'pointer', fontSize: '.7em' }} border={'light'}>
-				<Image width={130} height={130} src={instrument.img}/>
+				<Image width={130} height={130} src={process.env.REACT_APP_API_URL + instrument.img}/>
 				<div className='mt-1 d-flex justify-content-between align-items-center'>
 					<div className='mt-1'>{instrument.name}</div>
 					<div className='d-flex align-items-center'>

@@ -1,30 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import bigStar from '../assets/bigStar.png';
+import { fetchOneInstrument } from '../http/instrumentAPI';
 
 function InstrumentPage() {
-	const instrument = {
-		id: 1,
-		name: 'Alhambra J-1A',
-		price: 4500,
-		rating: 5,
-		img: 'https://www.tvoyzvuk.by/images/thumbnails/189/189/detailed/40/Alhambra_J-1A.jpg',
-	};
 
-	const description = [
-		{ id: 1, title: 'Материал корпуса', description: 'Ель' },
-		{ id: 2, title: 'Накладка грифа', description: 'Эбони' },
-		{ id: 3, title: 'Покрытие корпуса', description: 'Матовое' },
-		{ id: 4, title: 'Производитель', description: 'Alhambra' },
-		{ id: 5, title: 'Тип корпуса', description: 'Dreadnought cutaway' },
-		{ id: 6, title: 'Верхняя дека', description: 'Массив ели' },
-		{ id: 7, title: 'Количество струн', description: '6' },
-	];
+	const [instrument, setInstrument] = useState({info: []})
+	const {id} = useParams()
+useEffect(() => {
+	fetchOneInstrument(id).then(data => setInstrument(data))
+
+}, [])
+
+
+	// const instrument = {
+	// 	id: 1,
+	// 	name: 'Alhambra J-1A',
+	// 	price: 4500,
+	// 	rating: 5,
+	// 	img: 'https://www.tvoyzvuk.by/images/thumbnails/189/189/detailed/40/Alhambra_J-1A.jpg',
+	// };
+
+	// const description = [
+	// 	{ id: 1, title: 'Материал корпуса', description: 'Ель' },
+	// 	{ id: 2, title: 'Накладка грифа', description: 'Эбони' },
+	// 	{ id: 3, title: 'Покрытие корпуса', description: 'Матовое' },
+	// 	{ id: 4, title: 'Производитель', description: 'Alhambra' },
+	// 	{ id: 5, title: 'Тип корпуса', description: 'Dreadnought cutaway' },
+	// 	{ id: 6, title: 'Верхняя дека', description: 'Массив ели' },
+	// 	{ id: 7, title: 'Количество струн', description: '6' },
+	// ];
 	return (
 		<Container className='mt-3'>
 			<Row>
 				<Col md={4}>
-					<Image width={300} height={300} src={instrument.img} />
+					<Image width={300} height={300} src={process.env.REACT_APP_API_URL + instrument.img} />
 				</Col>
 				<Col md={4}>
 					<Row className='d-flex flex-column align-items-center'>
@@ -53,7 +64,7 @@ function InstrumentPage() {
 			</Row>
 			<Row className='m-2 d-flex flex-column'>
 			<h2>Характеристики</h2>
-				{description.map((info, index) => (
+				{instrument.info.map((info, index) => (
 					<Row style={{ background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 7 }}>
 						{info.title}: {info.description}
 					</Row>
