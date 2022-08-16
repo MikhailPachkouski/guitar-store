@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
+import { createBrand } from '../../http/instrumentAPI';
 
 const CreateBrand = ({show, onHide}) => {
+  const [value, setValue] = useState('');
+
+	const addBrand = () => {
+		createBrand({ name: value }).then(data =>{
+      setValue('')
+      onHide()});
+	};
 	return (
 		<Modal
       show={show}
@@ -19,12 +27,14 @@ const CreateBrand = ({show, onHide}) => {
         <Form>
 					<Form.Control
 						placeholder='Введите название типа'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
 					/>
 				</Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant='outline-danger' onClick={onHide}>Закрыть</Button>
-        <Button variant='outline-success' onClick={onHide}>Создать</Button>
+        <Button variant='outline-success' onClick={addBrand}>Создать</Button>
       </Modal.Footer>
     </Modal>
 	)

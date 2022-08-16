@@ -1,33 +1,44 @@
-import React from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
+import React, { useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { createType } from '../../http/instrumentAPI';
 
-const CreateType = ({show, onHide}) => {
+const CreateType = ({ show, onHide }) => {
+	const [value, setValue] = useState('');
+
+	const addType = () => {
+		createType({ name: value }).then(data =>{
+      setValue('')
+      onHide()});
+	};
 	return (
 		<Modal
-      show={show}
+			show={show}
 			onHide={onHide}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Добавить тип
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
+			size='lg'
+			aria-labelledby='contained-modal-title-vcenter'
+			centered>
+			<Modal.Header closeButton>
+				<Modal.Title id='contained-modal-title-vcenter'>Добавить тип</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form>
 					<Form.Control
 						placeholder='Введите название типа'
+						value={value}
+						onChange={e => setValue(e.target.value)}
 					/>
 				</Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant='outline-danger' onClick={onHide}>Закрыть</Button>
-        <Button variant='outline-success' onClick={onHide}>Создать</Button>
-      </Modal.Footer>
-    </Modal>
-	)
-}
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant='outline-danger' onClick={onHide}>
+					Закрыть
+				</Button>
+				<Button variant='outline-success' onClick={addType}>
+					Создать
+				</Button>
+			</Modal.Footer>
+		</Modal>
+	);
+};
 
-export default CreateType
+export default CreateType;
