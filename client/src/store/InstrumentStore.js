@@ -24,6 +24,10 @@ export default class InstrumentStore {
 		];
 		this._selectedType = {};
 		this._selectedBrand = {};
+		this._page = 1
+		this._totalPage = 0
+		this._limit = 1
+
 		makeAutoObservable(this);
 	}
 
@@ -40,11 +44,25 @@ export default class InstrumentStore {
 	}
 
 	setSelectedType(type) {
+		this.setPage(1)
 		this._selectedType = type;
 	}
 
 	setSelectedBrand(brand) {
+		this.setPage(1)
 		this._selectedBrand = brand;
+	}
+
+	setPage(page) {
+		this._page = page;
+	}
+
+	setTotalPage(totalPage) {
+		this._totalPage = totalPage;
+	}
+
+	setLimit(limit) {
+		this._limit = limit;
 	}
 
 	get types() {
@@ -62,5 +80,15 @@ export default class InstrumentStore {
 	}
 	get selectedBrand() {
 		return this._selectedBrand;
+	}
+
+	get page() {
+		return this._page;
+	}
+	get totalPage() {
+		return this._totalPage;
+	}
+	get limit() {
+		return this._limit;
 	}
 }

@@ -25,8 +25,10 @@ export const createInstrument = async (instrument) => {
 	return data;
 };
 
-export const fetchInstruments = async () => {
-	const { data } = await $host.get('api/instrument');
+export const fetchInstruments = async (typeId, brandId, page, limit = 1) => {
+	const { data } = await $host.get('api/instrument', {params: {
+		typeId, brandId, page, limit
+	}});
 	return data;
 };
 

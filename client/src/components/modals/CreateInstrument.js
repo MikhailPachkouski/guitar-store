@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { Context } from '../..';
-import { fetchBrands, fetchTypes } from '../../http/instrumentAPI';
+import { createInstrument, fetchBrands, fetchTypes } from '../../http/instrumentAPI';
 
 const CreateInstrument = observer( ({ show, onHide }) => {
 	const { instrument } = useContext(Context);
@@ -36,7 +36,14 @@ const CreateInstrument = observer( ({ show, onHide }) => {
 
 
 	const addInstrument = () => {
-		console.log(info);
+		const formData = new FormData()
+		formData.append('name', name)
+		formData.append('price', `${price}`)
+		formData.append('img', file)
+		formData.append('brandId', instrument.selectedBrand.id)
+		formData.append('typeId', instrument.selectedType.id)
+		formData.append('info', JSON.stringify(info))
+		createInstrument(formData).then(data => onHide())
 	}
 	return (
 		<Modal
